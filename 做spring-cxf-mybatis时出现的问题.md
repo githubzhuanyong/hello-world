@@ -32,6 +32,7 @@ java.lang.ClassCastException: com.github.pagehelper.PageHelper cannot be cast to
 	  </bean>
 	</array>
 </property>
+
 ## 这样改过这后依然报错：
 
 Cause: com.github.pagehelper.PageException: java.lang.ClassNotFoundException: mysql
