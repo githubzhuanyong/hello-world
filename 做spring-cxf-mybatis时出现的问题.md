@@ -4,6 +4,7 @@
 ## 由于没有Mybatis的配置文件 所以在spring的配置文件中配置
 
 ## 过去的配置：
+
  	<property name="plugins">
   		<array>
   			<bean class="com.github.pagehelper.PageHelper">
@@ -16,11 +17,13 @@
   			</bean>
   		</array>
  	</property>
+	
 ## 这样做会出现的问题 ：
 java.lang.ClassCastException: com.github.pagehelper.PageHelper cannot be cast to org.apache.ibatis.plugin.Interceptor
 ## 这是因为pageHelper是通过mybatis的pulgin实现了Interceptor接口，从而获得要执行的sql语句实现分页技术，而
 ## 我们的PageHelper5.1.6版本中的这个类，并没有出现implements Interceptor，再来看下pagehelper这个包下的其他类有没有实现Interceptor的，然后我们## 找到了下面这个:PageInterceptor
 ## 这样我们把spring的配置文件修改如下：
+
 <property name="plugins">
 	<array>
 	  <bean class="com.github.pagehelper.PageInterceptor">
@@ -53,4 +56,5 @@ Cause: com.github.pagehelper.PageException: java.lang.ClassNotFoundException: my
 Class 'com.alibaba.fastjson.support.spring.FastJsonpResponseBodyAdvice' is marked deprecated [config set: DataMangement/web-context] 
 ## 这是因为包扫描路径的问题，千万千万不能设置成com下面我出现问题的时候就是因为这里设置成com了,导致fastjson的fastJsonpResponseBodyAdvice这个方法也被开启了
 ## 改成这样就可以了： 
+
 <context:component-scan base-package="com.etoak.cxf"/>
