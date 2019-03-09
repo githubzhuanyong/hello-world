@@ -1,0 +1,33 @@
+周五做项目时遇到的问题：
+用的MYSQL数据库表中有字段是date，实体类里面用的java.util.Date，Mapper的配置文件里面也没有做任何处理直接是INSERT user(expect)VALUES(#{expect})，
+在前端页面添加数据时总是报400的错误,经过上网查找，找到了解决办法，以下是网上资料：
+    经查，是请求无效的意思 
+    一般可能出现在有Date格式的数据表中
+
+
+    我的模型类有个Date类型的数据，如果要正常传入，可以添加以下代码在Date格式数据上方，如图所示 
+##    @DateTimeFormat(pattern=”yyyy-MM-dd”) 
+##    @JsonFormat(timezone = “GMT+8”, pattern = “yyyy-MM-dd”)
+
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd")
+    private Date expect;
+    private int state;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd")
+    private Date createdate;
+    private int lev;
+
+    其中@DateTimeFormat(pattern=”yyyy-MM-dd”)是指定日期格式的注解，也是解决这次问题的关键代码，它将前台的数据格式化传到后台
+
+    而 @JsonFormat(timezone = “GMT+8”, pattern = “yyyy-MM-dd”)并不是解决这次问题的代码，也顺带说一下 
+    默认情况下时区为GMT（即标准时区），所以会造成输出少8小时，这段代码是将时间改为北京时间的代码。 
+    并且，它还是后台的数据传送到前台的格式，一般和@DateTimeFormat(pattern=”yyyy-MM-dd”)成对使用。
+    --------------------- 
+    作者：Hal白夜 
+    来源：CSDN 
+    原文：https://blog.csdn.net/weixin_38958597/article/details/82027544 
+    版权声明：本文为博主原创文章，转载请附上博文链接！
+    
+    
+    在把这两个注释加上之后，解决400错误
