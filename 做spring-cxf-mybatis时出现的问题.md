@@ -25,12 +25,12 @@
 <property name="plugins">
 	<array>
 	  <bean class="com.github.pagehelper.PageInterceptor">
- 			<property name="properties">
-				<props>
- 					<prop key="dialect">mysql</prop>
-				</props>
- 			</property>
-		</bean>
+		<property name="properties">
+			<props>
+				<prop key="dialect">mysql</prop>
+			</props>
+		</property>
+	  </bean>
 	</array>
 </property>
 ## 这样改过这后依然报错：Cause: com.github.pagehelper.PageException: 
@@ -39,7 +39,7 @@
 ## 这是因为在pagehelper插件4.0.0以后的版本支持自动识别使用的数据库，可以不用配置 <property 
 ## name="dialect" value="mysql"/>  最终结果如下：
 
- 		<property name="plugins">
+    <property name="plugins">
          <array>
             <bean class="com.github.pagehelper.PageInterceptor"/>
          </array>
