@@ -24,23 +24,23 @@ java.lang.ClassCastException: com.github.pagehelper.PageHelper cannot be cast to
 ## 我们的PageHelper5.1.6版本中的这个类，并没有出现implements Interceptor，再来看下pagehelper这个包下的其他类有没有实现Interceptor的，然后我们## 找到了下面这个:PageInterceptor
 ## 这样我们把spring的配置文件修改如下：
 
-<property name="plugins">
-	<array>
-	  <bean class="com.github.pagehelper.PageInterceptor">
-		<property name="properties">
-			<props>
-				<prop key="dialect">mysql</prop>
-			</props>
-		</property>
-	  </bean>
-	</array>
-</property>
+	<property name="plugins">
+		<array>
+		  <bean class="com.github.pagehelper.PageInterceptor">
+			<property name="properties">
+				<props>
+					<prop key="dialect">mysql</prop>
+				</props>
+			</property>
+		  </bean>
+		</array>
+	</property>
 
 ## 这样改过这后依然报错：
 
 Cause: com.github.pagehelper.PageException: java.lang.ClassNotFoundException: mysql
 
-## 这是因为在pagehelper插件4.0.0以后的版本支持自动识别使用的数据库，可以不用配置 
+## 这是因为在pagehelper插件4.0.0以后的版本支持自动识别使用的数据库，可以不用配置下面的： 
 
 <property name="dialect" value="mysql"/>
 
